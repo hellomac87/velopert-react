@@ -1,8 +1,17 @@
 import React, { Component } from 'react';
 
+const Problematic = () => {
+    throw (new Error('Bug'));
+    return (
+        <div></div>
+    )
+}
+
+
 class Counter extends Component {
     state = {
-        number : 0
+        number : 0,
+        error : false
     }
 
     constructor(props){
@@ -33,6 +42,12 @@ class Counter extends Component {
         console.log('componentDidUpdate');
     }
 
+    componentDidCatch(error, info){
+        this.setState({
+            error : true
+        });
+    }
+
     handleIncrease = () => {
         const { number } = this.state;
         this.setState({
@@ -50,10 +65,14 @@ class Counter extends Component {
 
     render(){
         console.log('render');
+
+        if(this.state.error) return (<h1>Error!</h1>);
+
         return (
             <div>
             <h1>Counter</h1>
             <div>Value : {this.state.number }</div>
+            {this.state.number === 4 && <Problematic/>}
             <button onClick={this.handleIncrease}>+</button>
             <button onClick={this.handleDecrease}>-</button>
             </div>
