@@ -1,11 +1,20 @@
 import React, { Component, Fragment } from 'react';
-import Counter from './Counter';
 import './App.css';
+import PhoneForm from './components/PhoneForm';
 
 class App extends Component {
+
+  handleCreate = (data) => {
+    console.log(data);
+  }
+
   render() {
     return (
-      <Counter/>
+      <div>
+        <PhoneForm
+          onCreate={this.handleCreate}
+        />
+      </div>
     );
   }
 }
